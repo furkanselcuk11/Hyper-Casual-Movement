@@ -19,6 +19,7 @@ public class MobileController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        transform.Translate(0, 0, speed * Time.fixedDeltaTime);
         MoveInput();    // Player hareket kontrolü
     }
 
@@ -26,29 +27,74 @@ public class MobileController : MonoBehaviour
     {
         #region Mobile Controller 2 Direction
 
-        float moveX = transform.position.x; // Player objesinin x pozisyonun deðerini alýr
-        transform.Translate(0, 0, speed * Time.fixedDeltaTime); // Player nesnesi oyun baþladýðýnda sürekli ileri hareket eder       
+        //float moveX = transform.position.x; // Player objesinin x pozisyonun deðerini alýr
+        //float moveZ = transform.position.z; // Player objesinin z pozisyonun deðerini alýr 
+
+        //anim.SetBool("isRunning", true);
+
+        //if (Input.GetKey(KeyCode.LeftArrow) || MobileInput.instance.swipeLeft)
+        //{   // Eðer klavyede sol ok tuþuna basýldýysa yada "MobileInput" scriptinin swipeLeft deðeri True ise  Sola gider               
+        //    moveX = Mathf.Clamp(moveX - 1 * horizontalspeed * Time.fixedDeltaTime, -defaultSwipe, defaultSwipe);  // Pozisyon sýnýrlandýrýlmasý koyulacaksa
+        //    // Player objesinin x (sol) pozisyonundaki gideceði min-max sýnýrý belirler
+        //    //moveX = moveX - 1 * horizontalspeed * Time.fixedDeltaTime;  // Pozisyon sýnýrlandýrýlmasý yoksa        
+        //}
+        //else if (Input.GetKey(KeyCode.RightArrow) || MobileInput.instance.swipeRight)
+        //{   // Eðer klavyede sað ok tuþuna basýldýysa yada "MobileInput" scriptinin swipeRight deðeri True ise Saða gider         
+        //    moveX = Mathf.Clamp(moveX + 1 * horizontalspeed * Time.fixedDeltaTime, -defaultSwipe, defaultSwipe);  // Pozisyon sýnýrlandýrýlmasý koyulacaksa
+        //    // Player objesinin  x (sað) pozisyonundaki gideceði min-max sýnýrý belirler
+        //    //moveX = moveX + 1 * horizontalspeed * Time.fixedDeltaTime;  // Pozisyon sýnýrlandýrýlmasý yoksa                  
+        //}
+        //else if (Input.GetKey(KeyCode.UpArrow))
+        //{   // Eðer klavyede yukarý ok tuþuna basýldýysa yada "MobileInput" scriptinin swipeUp deðeri True ise Ýleri hareket gider         
+        //    moveZ = moveZ + 1 * speed * Time.fixedDeltaTime;
+        //}
+        //else if (Input.GetKey(KeyCode.DownArrow))
+        //{   // Eðer klavyede aþaðý ok tuþuna basýldýysa yada "MobileInput" scriptinin swipeDown deðeri True ise Geri hareket gider         
+        //    moveZ = moveZ - 1 * speed * Time.fixedDeltaTime;
+        //}
+        //else
+        //{
+        //    rb.velocity = Vector3.zero; //Eðer sað-sol hareket yapýlmadýysa Player objesi sabit kalsýn
+        //}
+        //transform.position = new Vector3(moveX, transform.position.y, moveZ);
+        //// Player objesinin pozisyonu moveX deðerine göre x ekseninde sað-sol hareket eder
+
+        #endregion
+
+        #region Mobile Controller 4 Direction
+
+        float moveX = transform.position.x; // Player objesinin x pozisyonun deðerini alýr      
+        float moveZ = transform.position.z; // Player objesinin z pozisyonun deðerini alýr   
 
         anim.SetBool("isRunning", true);
 
         if (Input.GetKey(KeyCode.LeftArrow) || MobileInput.instance.swipeLeft)
-        {   // Eðer klavyede sol ok tuþuna basýldýysa yada "MobileInput" scriptinin swipeLeft deðeri True ise  Sola gider               
-            moveX = Mathf.Clamp(moveX - 1 * horizontalspeed * Time.fixedDeltaTime, -defaultSwipe, defaultSwipe);  // Pozisyon sýnýrlandýrýlmasý koyulacaksa
+        {   // Eðer klavyede sol ok tuþuna basýldýysa yada "MobileInput" scriptinin swipeLeft deðeri True ise  Sola hareket gider
+            moveX = Mathf.Clamp(moveX - 1 * horizontalspeed * Time.fixedDeltaTime, -defaultSwipe, defaultSwipe);    // Pozisyon sýnýrlandýrýlmasý koyulacaksa
             // Player objesinin x (sol) pozisyonundaki gideceði min-max sýnýrý belirler
-            //moveX = moveX - 1 * horizontalspeed * Time.fixedDeltaTime;  // Pozisyon sýnýrlandýrýlmasý yoksa        
+            //moveX = moveX - 1 * horizontalspeed * Time.fixedDeltaTime;    // Pozisyon sýnýrlandýrýlmasý yoksa 
         }
         else if (Input.GetKey(KeyCode.RightArrow) || MobileInput.instance.swipeRight)
-        {   // Eðer klavyede sað ok tuþuna basýldýysa yada "MobileInput" scriptinin swipeRight deðeri True ise Saða gider         
-            moveX = Mathf.Clamp(moveX + 1 * horizontalspeed * Time.fixedDeltaTime, -defaultSwipe, defaultSwipe);  // Pozisyon sýnýrlandýrýlmasý koyulacaksa
-            // Player objesinin  x (sað) pozisyonundaki gideceði min-max sýnýrý belirler
-            //moveX = moveX + 1 * horizontalspeed * Time.fixedDeltaTime;  // Pozisyon sýnýrlandýrýlmasý yoksa                  
+        {   // Eðer klavyede sað ok tuþuna basýldýysa yada "MobileInput" scriptinin swipeRight deðeri True ise Saða hareket gider  
+            moveX = Mathf.Clamp(moveX + 1 * horizontalspeed * Time.fixedDeltaTime, -defaultSwipe, defaultSwipe);    // Pozisyon sýnýrlandýrýlmasý koyulacaksa
+            // Player objesinin x (sað) pozisyonundaki gideceði min-max sýnýrý belirler
+            //moveX = moveX + 1 * horizontalspeed * Time.fixedDeltaTime;    // Pozisyon sýnýrlandýrýlmasý yoksa 
         }
+        //else if (Input.GetKey(KeyCode.UpArrow) || MobileInput.instance.swipeUp)
+        //{   // Eðer klavyede yukarý ok tuþuna basýldýysa yada "MobileInput" scriptinin swipeUp deðeri True ise Ýleri hareket gider         
+        //    moveZ = moveZ + 1 * speed * Time.fixedDeltaTime;
+        //}
+        //else if (Input.GetKey(KeyCode.DownArrow) || MobileInput.instance.swipeDown)
+        //{   // Eðer klavyede aþaðý ok tuþuna basýldýysa yada "MobileInput" scriptinin swipeDown deðeri True ise Geri hareket gider         
+        //    moveZ = moveZ - 1 * speed * Time.fixedDeltaTime;
+        //}
         else
         {
-            rb.velocity = Vector3.zero; //Eðer sað-sol hareket yapýlmadýysa Player objesi sabit kalsýn
+            rb.velocity = Vector3.zero; // Eðer hareket edilmediyse Player objesi sabit kalsýn
         }
-        transform.position = new Vector3(moveX, transform.position.y, transform.position.z);
-        // Player objesinin pozisyonu moveX deðerine göre x ekseninde sað-sol hareket eder
+
+        transform.position = new Vector3(moveX, transform.position.y, moveZ);
+        // Player objesinin pozisyonu moveX deðerine göre x ekseninde, moveZ deðerine göre z ekseninde hareket eder ve y ekseninde sabit kalýr 
 
         #endregion
     }

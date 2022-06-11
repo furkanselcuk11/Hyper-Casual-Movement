@@ -15,6 +15,8 @@ public class MobileInput : MonoBehaviour
     public bool tap;
     public bool swipeLeft;
     public bool swipeRight;
+    public bool swipeUp;
+    public bool swipeDown;
     public bool swipe;
 
     private void Awake()
@@ -73,25 +75,83 @@ public class MobileInput : MonoBehaviour
     void SwipeMove()
     {
         #region Mobile Controller 2 Direction
-        //Kaydýrma hareketinin yönünü belirler
+        ////Kaydýrma hareketinin yönünü belirler
+        //if (tap)    // Eðer dokunma iþlemi aktif ise çalýþýr
+        //{
+        //    if (swipe)  // Eðer swipe(kaydýrma) iþlemi aktif ise çalýþýr
+        //    {
+        //        if (delta.magnitude > 100)  // delta deðerinin uzunluk bilgisini alýr ve 100 deðerinden büyükse çalýþýr - 100 deðeri minimum kaydýrma mesafesi
+        //        {
+        //            float x = delta.x;
+        //            if (x < 0)
+        //            {   // Eðer delta vector'nün (Toplam kaydýrma mesafesi) x deðeri 0 dan küçükse Saða kaydýrma aktif olur                       
+        //                swipeRight = true;
+        //                swipeLeft = false;
+        //                tap = false;
+        //            }
+        //            else
+        //            {   //  Eðer delta vector'nün (Toplam kaydýrma mesafesi) x deðeri 0 dan büyükse Sola kaydýrma aktif olur 
+        //                swipeRight = false;
+        //                swipeLeft = true;
+        //                tap = false;
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {   // Eðer kaydýrma iþlemi pasif ise 
+        //        tap = false;    // Dokunma pasif olur
+        //    }
+        //}
+        #endregion
+
+        #region Mobile Controller 4 Direction
         if (tap)    // Eðer dokunma iþlemi aktif ise çalýþýr
         {
             if (swipe)  // Eðer swipe(kaydýrma) iþlemi aktif ise çalýþýr
             {
                 if (delta.magnitude > 100)  // delta deðerinin uzunluk bilgisini alýr ve 100 deðerinden büyükse çalýþýr - 100 deðeri minimum kaydýrma mesafesi
                 {
-                    float x = delta.x;
-                    if (x < 0)
-                    {   // Eðer delta vector'nün (Toplam kaydýrma mesafesi) x deðeri 0 dan küçükse Saða kaydýrma aktif olur                       
-                        swipeRight = true;
-                        swipeLeft = false;
-                        tap = false;
+                    float x = delta.x;  // Kayrýma mesafesinin x deðerini alýr
+                    float y = delta.y;  // Kayrýma mesafesinin y deðerini alýr
+                    if (Mathf.Abs(x) > Mathf.Abs(y))    // Eðer kaydýrma mesafesinin x ekseni y ekseninden daha büyükse (Right-Left) deilse (Up-Down) kaydýrma aktif olur
+                    {
+                        // Right-Left
+                        if (x < 0)
+                        {
+                            // Saða kaydýrma aktif olur 
+                            swipeRight = true;
+                            swipeLeft = false;
+                            swipeUp = false;
+                            swipeDown = false;
+                        }
+                        else
+                        {
+                            // Sola kaydýrma aktif olur 
+                            swipeRight = false;
+                            swipeLeft = true;
+                            swipeUp = false;
+                            swipeDown = false;
+                        }
                     }
                     else
-                    {   //  Eðer delta vector'nün (Toplam kaydýrma mesafesi) x deðeri 0 dan büyükse Sola kaydýrma aktif olur 
-                        swipeRight = false;
-                        swipeLeft = true;
-                        tap = false;
+                    {
+                        // Up-Down
+                        if (y < 0)
+                        {
+                            // Ýleri kaydýrma aktif olur 
+                            swipeRight = false;
+                            swipeLeft = false;
+                            swipeUp = true;
+                            swipeDown = false;
+                        }
+                        else
+                        {
+                            // Geri kaydýrma aktif olur 
+                            swipeRight = false;
+                            swipeLeft = false;
+                            swipeUp = false;
+                            swipeDown = true;
+                        }
                     }
                 }
             }

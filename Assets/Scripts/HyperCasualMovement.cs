@@ -22,10 +22,15 @@ public class HyperCasualMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
     }
+    
 
     void Update()
     {
-        if (Input.touchCount>0) // Ekrana dokunulmuþsa
+        InfiniteMove();
+    }
+    private void InfiniteMove()
+    {
+        if (Input.touchCount > 0) // Ekrana dokunulmuþsa
         {
             _touch = Input.GetTouch(0);
             if (_touch.phase == TouchPhase.Began)   // Dokunma baþladyýsa
@@ -33,7 +38,7 @@ public class HyperCasualMovement : MonoBehaviour
                 _dragStarted = true;    // Dokunma/sürüklenme baþlanmýþtýr
                 _isMoving = true;   // Hareket ediyor
                 _touchDown = _touch.position;   // Dokunduðu yerin pozisyonunu al
-                _touchUp= _touch.position;  // Dokunduðu yerin pozisyonunu al
+                _touchUp = _touch.position;  // Dokunduðu yerin pozisyonunu al
             }
         }
         if (_dragStarted)   // Oyuncu sürükleme iþlemi yaptýysa
@@ -50,10 +55,16 @@ public class HyperCasualMovement : MonoBehaviour
                 _isMoving = false;  // Hareket etmiyor
                 _dragStarted = false;   // Sürükleme yapmýyor
             }
-            // Karakter kendi ekseni etrafýnda döner            
-            gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, CalculateRotation(), _rotationSpeed * Time.deltaTime);
-            // Karakter ileri hareker eder
-            gameObject.transform.Translate(Vector3.forward * _movementSpeed * Time.deltaTime);
+            //// Karakter kendi ekseni etrafýnda döner            
+            //gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, CalculateRotation(), _rotationSpeed * Time.deltaTime);
+            //// Karakter ileri hareker eder
+            //gameObject.transform.Translate(Vector3.forward * _movementSpeed * Time.deltaTime);
+
+
+            
+            rb.rotation = Quaternion.RotateTowards(transform.rotation, CalculateRotation(), _rotationSpeed * Time.fixedDeltaTime);
+            rb.velocity = transform.forward * _movementSpeed * Time.fixedDeltaTime;
+
         }
 
         if (_isMoving && _dragStarted)

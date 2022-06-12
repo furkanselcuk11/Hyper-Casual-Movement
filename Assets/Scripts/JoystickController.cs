@@ -5,6 +5,7 @@ using UnityEngine;
 public class JoystickController : MonoBehaviour
 {
     [SerializeField] private float _movementSpeed;
+    [SerializeField] private float _rotationSpeed = 500;
 
     Rigidbody rb;
     private Animator anim;
@@ -36,7 +37,8 @@ public class JoystickController : MonoBehaviour
         if (rb.velocity != Vector3.zero)
         {
             anim.SetBool("isRunning", true);
-            rb.rotation = Quaternion.LookRotation(rb.velocity, Vector3.up);
+            Quaternion temp= Quaternion.LookRotation(rb.velocity, Vector3.up);
+            rb.rotation = Quaternion.RotateTowards(transform.rotation, temp, _rotationSpeed * Time.fixedDeltaTime);
         }
         else
         {
